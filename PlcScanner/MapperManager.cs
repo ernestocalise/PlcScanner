@@ -130,15 +130,25 @@ namespace PlcScanner
         public void SubscribeTags()
         {
             var frmSubs = new dialogSubscription(ClientMapping);
+            List<OpcTag> TagsToSubscribe = new List<OpcTag>();
             if (frmSubs.ShowDialog() == DialogResult.OK)
             {
                 foreach (var val in frmSubs.Mapping)
                 {
-                    SubscribeTagOnMapping(ClientMapping, val.Key, val.Value);
+                    SubscribeTagOnMapping(ClientMapping, val.Key, val.Value, ref TagsToSubscribe);
+                }
+                Dictionary<string, string> NodeIdToSubscriptionId = new Dictionary<string, string>();
+                if (TagsToSubscribe.Count > 0)
+                {
+                    NodeIdToSubscriptionId = _client.SubscribeTags(TagsToSubscribe, 1000, NotificationEventHandler);
+                    for (int i = 0; i < NodeIdToSubscriptionId.Count; i++)
+                    {
+                        FindAndUpdateTagOnMapping(ClientMapping, NodeIdToSubscriptionId.Keys.ElementAt(i), NodeIdToSubscriptionId.Values.ElementAt(i), null, OpcTagProperty.SubscriptionID);
+                    }
                 }
             }
         }
-        private OpcTag SubscribeTagOnMapping(OpcTag tag, string nodeId, bool subscriptionStatus)
+        private OpcTag SubscribeTagOnMapping(OpcTag tag, string nodeId, bool subscriptionStatus, ref List<OpcTag> Tags)
         {
             OpcTag output = null;
             if (tag.NodeId == nodeId)
@@ -146,11 +156,12 @@ namespace PlcScanner
                 if (subscriptionStatus != (tag.SubscriptionID != string.Empty) && tag.DataType != "Folder" && !string.IsNullOrEmpty(tag.NodeId))
                 {
                     if (subscriptionStatus)
-                        tag.SubscriptionID = _client.CreateSubscription(new List<string> { tag.NodeId }, 1000, NotificationEventHandler);
+                        Tags.Add(tag);
                     else
                     {
-                        _client.RemoveSubscription(tag.SubscriptionID);
+                        _client.RemoveSubscription(tag.SubscriptionID, tag.NodeId);
                         tag.SubscriptionID = string.Empty;
+                        tag.Status = "Disconnected";
                     }
                 }
                 output = tag;
@@ -160,7 +171,7 @@ namespace PlcScanner
                 foreach (OpcTag children in tag.Childrens)
                 {
                     if (output == null)
-                        output = SubscribeTagOnMapping(children, nodeId, subscriptionStatus);
+                        output = SubscribeTagOnMapping(children, nodeId, subscriptionStatus, ref Tags);
                 }
             }
             return output;
@@ -265,14 +276,19 @@ namespace PlcScanner
             }
             return output;
         }
-        public OpcTag FindAndUpdateTagOnMapping(OpcTag tag, string nodeId, string value, string serverTimestamp)
+        public OpcTag FindAndUpdateTagOnMapping(OpcTag tag, string nodeId, string value, string serverTimestamp, OpcTagProperty property = OpcTagProperty.Value)
         {
             OpcTag output = null;
             if (tag.NodeId == nodeId)
             {
-                tag.Value = value;
-                tag.Timestamp = serverTimestamp;
-                tag.Status = "Good";
+                if (property == OpcTagProperty.Value)
+                {
+                    tag.Value = value;
+                    tag.Timestamp = serverTimestamp;
+                    tag.Status = "Good";
+                }
+                else
+                    tag.SubscriptionID = value;
                 output = tag;
             }
             else
@@ -280,7 +296,7 @@ namespace PlcScanner
                 foreach (OpcTag children in tag.Childrens)
                 {
                     if (output == null)
-                        output = FindAndUpdateTagOnMapping(children, nodeId, value, serverTimestamp);
+                        output = FindAndUpdateTagOnMapping(children, nodeId, value, serverTimestamp, property);
                 }
             }
             return output;
@@ -310,21 +326,6 @@ namespace PlcScanner
 
                     _RoutineRegistering.Add(change);
 
-                }
-            }
-        }
-        public void SubscibeAllTags()
-        {
-
-            foreach (var tag in _clientTags)
-            {
-                if (tag.DataType != "Folder" && !string.IsNullOrEmpty(tag.NodeId))
-                {
-                    List<string> nodeIds = new List<string>
-                    {
-                        tag.NodeId
-                    };
-                    _client.CreateSubscription(nodeIds, 1000, NotificationEventHandler);
                 }
             }
         }

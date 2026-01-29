@@ -25,8 +25,8 @@ namespace PlcScanner
     {
         private LogHandler _log;
         private List<MapperManager> _mappers = new List<MapperManager>();
-        private readonly int TWCLIENT_CELL_NODEID = 0;
-        private readonly int TWCLIENT_CELL_NAME = 1;
+        private readonly int TWCLIENT_CELL_NODEID = 1;
+        private readonly int TWCLIENT_CELL_NAME = 0;
         private readonly int TWCLIENT_CELL_VALUE = 2;
         private readonly int TWCLIENT_CELL_TIMESTAMP = 3;
         private readonly int TWCLIENT_CELL_STATUS = 4;
@@ -412,12 +412,11 @@ namespace PlcScanner
                     _log.WriteWarning("Unable to create Client nodes treeview!");
                 }
             }
-            twClientNodes.ExpandAll();
         }
         private void createTreeGridChildren(OpcTag tag, ref KryptonTreeGridNodeRow parent)
         {
-            var child = parent.Nodes.Add(tag.NodeId);
-            child.Cells[TWCLIENT_CELL_NAME].Value = tag.Name;
+            var child = parent.Nodes.Add(tag.Name);
+            child.Cells[TWCLIENT_CELL_NODEID].Value = tag.NodeId;
             child.Cells[TWCLIENT_CELL_VALUE].Value = tag.Value;
             child.Cells[TWCLIENT_CELL_TIMESTAMP].Value = tag.Timestamp;
             child.Cells[TWCLIENT_CELL_STATUS].Value = tag.Status;
@@ -434,7 +433,7 @@ namespace PlcScanner
         {
             try
             {
-                if (row.Cells[TWCLIENT_CELL_NODEID].Value.ToString() == tag.NodeId)
+                if (row.Cells[TWCLIENT_CELL_NODEID].Value != null && row.Cells[TWCLIENT_CELL_NODEID].Value.ToString() == tag.NodeId)
                 {
                     row.Cells[TWCLIENT_CELL_VALUE].Value = tag.Value;
                     row.Cells[TWCLIENT_CELL_TIMESTAMP].Value = tag.Timestamp;

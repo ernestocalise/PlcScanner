@@ -32,4 +32,9 @@ namespace PlcScanner.Models
             Childrens = new List<OpcTag>();
         }
     }
+    public enum OpcTagProperty
+    {
+        Value = 0,
+        SubscriptionID = 1
+    }
 }

@@ -41,19 +41,18 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstConfigurations = new System.Windows.Forms.ListBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsConfigurationBtnAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsConfigurationBtnEdit = new System.Windows.Forms.ToolStripButton();
+            this.tsConfigurationBtnCopy = new System.Windows.Forms.ToolStripButton();
+            this.tsConfigurationBtnDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsConfigurationBtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.tcClientServer = new System.Windows.Forms.TabControl();
             this.tabClient = new System.Windows.Forms.TabPage();
             this.twClientNodes = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridView();
-            this.gwClientNodeId = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn();
             this.ctxMenuClientTable = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.readSyncronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeSyncronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gwClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientSubscribed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btnSubscibeTags = new System.Windows.Forms.Button();
             this.btnExploreRoutines = new System.Windows.Forms.Button();
             this.lblRoutineLenght = new System.Windows.Forms.Label();
@@ -73,6 +72,11 @@
             this.btnStartSimulationServer = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.gwHistorian = new System.Windows.Forms.DataGridView();
+            this.gwHistorianType = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gwHistorianProjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwHistorianProjectType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwHistorianMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwHistorianTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxListConfigutations = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realoadConfigurationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,16 +88,12 @@
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gwHistorianType = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gwHistorianProjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwHistorianProjectType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwHistorianMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwHistorianTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tsConfigurationBtnAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsConfigurationBtnEdit = new System.Windows.Forms.ToolStripButton();
-            this.tsConfigurationBtnCopy = new System.Windows.Forms.ToolStripButton();
-            this.tsConfigurationBtnDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsConfigurationBtnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.gwClientNodeId = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn();
+            this.gwClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientSubscribed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -239,10 +239,58 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // tsConfigurationBtnAdd
+            // 
+            this.tsConfigurationBtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsConfigurationBtnAdd.Image = global::PlcScanner.Properties.Resources.IconAdd;
+            this.tsConfigurationBtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsConfigurationBtnAdd.Name = "tsConfigurationBtnAdd";
+            this.tsConfigurationBtnAdd.Size = new System.Drawing.Size(29, 24);
+            this.tsConfigurationBtnAdd.Click += new System.EventHandler(this.tsConfigurationBtnAdd_Click);
+            // 
+            // tsConfigurationBtnEdit
+            // 
+            this.tsConfigurationBtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsConfigurationBtnEdit.Enabled = false;
+            this.tsConfigurationBtnEdit.Image = global::PlcScanner.Properties.Resources.IconEdit;
+            this.tsConfigurationBtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsConfigurationBtnEdit.Name = "tsConfigurationBtnEdit";
+            this.tsConfigurationBtnEdit.Size = new System.Drawing.Size(29, 24);
+            this.tsConfigurationBtnEdit.Click += new System.EventHandler(this.tsConfigurationBtnEdit_Click);
+            // 
+            // tsConfigurationBtnCopy
+            // 
+            this.tsConfigurationBtnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsConfigurationBtnCopy.Enabled = false;
+            this.tsConfigurationBtnCopy.Image = global::PlcScanner.Properties.Resources.IconCopy;
+            this.tsConfigurationBtnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsConfigurationBtnCopy.Name = "tsConfigurationBtnCopy";
+            this.tsConfigurationBtnCopy.Size = new System.Drawing.Size(29, 24);
+            this.tsConfigurationBtnCopy.Click += new System.EventHandler(this.tsConfigurationBtnCopy_Click);
+            // 
+            // tsConfigurationBtnDelete
+            // 
+            this.tsConfigurationBtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsConfigurationBtnDelete.Enabled = false;
+            this.tsConfigurationBtnDelete.Image = global::PlcScanner.Properties.Resources.IconDelete;
+            this.tsConfigurationBtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsConfigurationBtnDelete.Name = "tsConfigurationBtnDelete";
+            this.tsConfigurationBtnDelete.Size = new System.Drawing.Size(29, 24);
+            this.tsConfigurationBtnDelete.Click += new System.EventHandler(this.tsConfigurationBtnDelete_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // tsConfigurationBtnRefresh
+            // 
+            this.tsConfigurationBtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsConfigurationBtnRefresh.Image = global::PlcScanner.Properties.Resources.IconRefresh;
+            this.tsConfigurationBtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsConfigurationBtnRefresh.Name = "tsConfigurationBtnRefresh";
+            this.tsConfigurationBtnRefresh.Size = new System.Drawing.Size(29, 24);
+            this.tsConfigurationBtnRefresh.Click += new System.EventHandler(this.tsConfigurationBtnRefresh_Click);
             // 
             // tcClientServer
             // 
@@ -281,6 +329,7 @@
             // 
             this.twClientNodes.AllowUserToAddRows = false;
             this.twClientNodes.AllowUserToDeleteRows = false;
+            this.twClientNodes.AllowUserToOrderColumns = true;
             this.twClientNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -302,18 +351,6 @@
             this.twClientNodes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.twClientNodes.Size = new System.Drawing.Size(591, 157);
             this.twClientNodes.TabIndex = 10;
-            // 
-            // gwClientNodeId
-            // 
-            this.gwClientNodeId.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientNodeId.DefaultNodeImage = null;
-            this.gwClientNodeId.HeaderText = "NodeId";
-            this.gwClientNodeId.MinimumWidth = 6;
-            this.gwClientNodeId.Name = "gwClientNodeId";
-            this.gwClientNodeId.ReadOnly = true;
-            this.gwClientNodeId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gwClientNodeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientNodeId.Width = 125;
             // 
             // ctxMenuClientTable
             // 
@@ -338,55 +375,6 @@
             this.writeSyncronouslyToolStripMenuItem.Size = new System.Drawing.Size(204, 24);
             this.writeSyncronouslyToolStripMenuItem.Text = "Write Syncronously";
             this.writeSyncronouslyToolStripMenuItem.Click += new System.EventHandler(this.writeSyncronouslyToolStripMenuItem_Click);
-            // 
-            // gwClientName
-            // 
-            this.gwClientName.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientName.HeaderText = "Name";
-            this.gwClientName.MinimumWidth = 6;
-            this.gwClientName.Name = "gwClientName";
-            this.gwClientName.ReadOnly = true;
-            this.gwClientName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gwClientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientName.Width = 125;
-            // 
-            // gwClientValue
-            // 
-            this.gwClientValue.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientValue.HeaderText = "Value";
-            this.gwClientValue.MinimumWidth = 6;
-            this.gwClientValue.Name = "gwClientValue";
-            this.gwClientValue.ReadOnly = true;
-            this.gwClientValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientValue.Width = 125;
-            // 
-            // gwClientTimestamp
-            // 
-            this.gwClientTimestamp.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientTimestamp.HeaderText = "TimeStamp";
-            this.gwClientTimestamp.MinimumWidth = 6;
-            this.gwClientTimestamp.Name = "gwClientTimestamp";
-            this.gwClientTimestamp.ReadOnly = true;
-            this.gwClientTimestamp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientTimestamp.Width = 125;
-            // 
-            // gwClientStatus
-            // 
-            this.gwClientStatus.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientStatus.HeaderText = "Status";
-            this.gwClientStatus.MinimumWidth = 6;
-            this.gwClientStatus.Name = "gwClientStatus";
-            this.gwClientStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientStatus.Width = 125;
-            // 
-            // gwClientSubscribed
-            // 
-            this.gwClientSubscribed.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientSubscribed.HeaderText = "Subscribed";
-            this.gwClientSubscribed.MinimumWidth = 6;
-            this.gwClientSubscribed.Name = "gwClientSubscribed";
-            this.gwClientSubscribed.ReadOnly = true;
-            this.gwClientSubscribed.Width = 125;
             // 
             // btnSubscibeTags
             // 
@@ -501,7 +489,7 @@
             this.tabServer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabServer.Name = "tabServer";
             this.tabServer.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabServer.Size = new System.Drawing.Size(613, 243);
+            this.tabServer.Size = new System.Drawing.Size(613, 245);
             this.tabServer.TabIndex = 1;
             this.tabServer.Text = "Server";
             this.tabServer.UseVisualStyleBackColor = true;
@@ -521,7 +509,7 @@
             // btnAddRoutine
             // 
             this.btnAddRoutine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddRoutine.Location = new System.Drawing.Point(501, 209);
+            this.btnAddRoutine.Location = new System.Drawing.Point(501, 211);
             this.btnAddRoutine.Name = "btnAddRoutine";
             this.btnAddRoutine.Size = new System.Drawing.Size(104, 31);
             this.btnAddRoutine.TabIndex = 5;
@@ -543,7 +531,7 @@
             this.dgRoutines.RowHeadersWidth = 51;
             this.dgRoutines.RowTemplate.Height = 24;
             this.dgRoutines.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgRoutines.Size = new System.Drawing.Size(596, 147);
+            this.dgRoutines.Size = new System.Drawing.Size(596, 149);
             this.dgRoutines.TabIndex = 4;
             this.dgRoutines.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgRoutines_DataBindingComplete);
             // 
@@ -628,6 +616,50 @@
             this.gwHistorian.Size = new System.Drawing.Size(935, 125);
             this.gwHistorian.TabIndex = 0;
             this.gwHistorian.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.gwHistorian_DataBindingComplete);
+            // 
+            // gwHistorianType
+            // 
+            this.gwHistorianType.HeaderText = "Type";
+            this.gwHistorianType.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.gwHistorianType.MinimumWidth = 6;
+            this.gwHistorianType.Name = "gwHistorianType";
+            this.gwHistorianType.ReadOnly = true;
+            this.gwHistorianType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gwHistorianType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.gwHistorianType.Width = 125;
+            // 
+            // gwHistorianProjectName
+            // 
+            this.gwHistorianProjectName.HeaderText = "Project";
+            this.gwHistorianProjectName.MinimumWidth = 6;
+            this.gwHistorianProjectName.Name = "gwHistorianProjectName";
+            this.gwHistorianProjectName.ReadOnly = true;
+            this.gwHistorianProjectName.Width = 125;
+            // 
+            // gwHistorianProjectType
+            // 
+            this.gwHistorianProjectType.HeaderText = "Location";
+            this.gwHistorianProjectType.MinimumWidth = 6;
+            this.gwHistorianProjectType.Name = "gwHistorianProjectType";
+            this.gwHistorianProjectType.ReadOnly = true;
+            this.gwHistorianProjectType.Width = 125;
+            // 
+            // gwHistorianMessage
+            // 
+            this.gwHistorianMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gwHistorianMessage.HeaderText = "Message";
+            this.gwHistorianMessage.MinimumWidth = 6;
+            this.gwHistorianMessage.Name = "gwHistorianMessage";
+            this.gwHistorianMessage.ReadOnly = true;
+            // 
+            // gwHistorianTimestamp
+            // 
+            this.gwHistorianTimestamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.gwHistorianTimestamp.HeaderText = "Timestamp";
+            this.gwHistorianTimestamp.MinimumWidth = 6;
+            this.gwHistorianTimestamp.Name = "gwHistorianTimestamp";
+            this.gwHistorianTimestamp.ReadOnly = true;
+            this.gwHistorianTimestamp.Width = 104;
             // 
             // ctxListConfigutations
             // 
@@ -714,97 +746,66 @@
             this.stopToolStripMenuItem.Text = "Stop Routine";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
-            // gwHistorianType
+            // gwClientNodeId
             // 
-            this.gwHistorianType.HeaderText = "Type";
-            this.gwHistorianType.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.gwHistorianType.MinimumWidth = 6;
-            this.gwHistorianType.Name = "gwHistorianType";
-            this.gwHistorianType.ReadOnly = true;
-            this.gwHistorianType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gwHistorianType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.gwHistorianType.Width = 125;
+            this.gwClientNodeId.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientNodeId.DefaultNodeImage = null;
+            this.gwClientNodeId.HeaderText = "Name";
+            this.gwClientNodeId.MinimumWidth = 6;
+            this.gwClientNodeId.Name = "gwClientNodeId";
+            this.gwClientNodeId.ReadOnly = true;
+            this.gwClientNodeId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gwClientNodeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientNodeId.Width = 125;
             // 
-            // gwHistorianProjectName
+            // gwClientName
             // 
-            this.gwHistorianProjectName.HeaderText = "Project";
-            this.gwHistorianProjectName.MinimumWidth = 6;
-            this.gwHistorianProjectName.Name = "gwHistorianProjectName";
-            this.gwHistorianProjectName.ReadOnly = true;
-            this.gwHistorianProjectName.Width = 125;
+            this.gwClientName.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientName.HeaderText = "NodeId";
+            this.gwClientName.MinimumWidth = 6;
+            this.gwClientName.Name = "gwClientName";
+            this.gwClientName.ReadOnly = true;
+            this.gwClientName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gwClientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientName.Width = 125;
             // 
-            // gwHistorianProjectType
+            // gwClientValue
             // 
-            this.gwHistorianProjectType.HeaderText = "Location";
-            this.gwHistorianProjectType.MinimumWidth = 6;
-            this.gwHistorianProjectType.Name = "gwHistorianProjectType";
-            this.gwHistorianProjectType.ReadOnly = true;
-            this.gwHistorianProjectType.Width = 125;
+            this.gwClientValue.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientValue.HeaderText = "Value";
+            this.gwClientValue.MinimumWidth = 6;
+            this.gwClientValue.Name = "gwClientValue";
+            this.gwClientValue.ReadOnly = true;
+            this.gwClientValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientValue.Width = 125;
             // 
-            // gwHistorianMessage
+            // gwClientTimestamp
             // 
-            this.gwHistorianMessage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gwHistorianMessage.HeaderText = "Message";
-            this.gwHistorianMessage.MinimumWidth = 6;
-            this.gwHistorianMessage.Name = "gwHistorianMessage";
-            this.gwHistorianMessage.ReadOnly = true;
+            this.gwClientTimestamp.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientTimestamp.HeaderText = "TimeStamp";
+            this.gwClientTimestamp.MinimumWidth = 6;
+            this.gwClientTimestamp.Name = "gwClientTimestamp";
+            this.gwClientTimestamp.ReadOnly = true;
+            this.gwClientTimestamp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientTimestamp.Width = 125;
             // 
-            // gwHistorianTimestamp
+            // gwClientStatus
             // 
-            this.gwHistorianTimestamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.gwHistorianTimestamp.HeaderText = "Timestamp";
-            this.gwHistorianTimestamp.MinimumWidth = 6;
-            this.gwHistorianTimestamp.Name = "gwHistorianTimestamp";
-            this.gwHistorianTimestamp.ReadOnly = true;
-            this.gwHistorianTimestamp.Width = 104;
+            this.gwClientStatus.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientStatus.HeaderText = "Status";
+            this.gwClientStatus.MinimumWidth = 6;
+            this.gwClientStatus.Name = "gwClientStatus";
+            this.gwClientStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientStatus.Width = 125;
             // 
-            // tsConfigurationBtnAdd
+            // gwClientSubscribed
             // 
-            this.tsConfigurationBtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsConfigurationBtnAdd.Image = global::PlcScanner.Properties.Resources.IconAdd;
-            this.tsConfigurationBtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsConfigurationBtnAdd.Name = "tsConfigurationBtnAdd";
-            this.tsConfigurationBtnAdd.Size = new System.Drawing.Size(29, 24);
-            this.tsConfigurationBtnAdd.Click += new System.EventHandler(this.tsConfigurationBtnAdd_Click);
-            // 
-            // tsConfigurationBtnEdit
-            // 
-            this.tsConfigurationBtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsConfigurationBtnEdit.Enabled = false;
-            this.tsConfigurationBtnEdit.Image = global::PlcScanner.Properties.Resources.IconEdit;
-            this.tsConfigurationBtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsConfigurationBtnEdit.Name = "tsConfigurationBtnEdit";
-            this.tsConfigurationBtnEdit.Size = new System.Drawing.Size(29, 24);
-            this.tsConfigurationBtnEdit.Click += new System.EventHandler(this.tsConfigurationBtnEdit_Click);
-            // 
-            // tsConfigurationBtnCopy
-            // 
-            this.tsConfigurationBtnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsConfigurationBtnCopy.Enabled = false;
-            this.tsConfigurationBtnCopy.Image = global::PlcScanner.Properties.Resources.IconCopy;
-            this.tsConfigurationBtnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsConfigurationBtnCopy.Name = "tsConfigurationBtnCopy";
-            this.tsConfigurationBtnCopy.Size = new System.Drawing.Size(29, 24);
-            this.tsConfigurationBtnCopy.Click += new System.EventHandler(this.tsConfigurationBtnCopy_Click);
-            // 
-            // tsConfigurationBtnDelete
-            // 
-            this.tsConfigurationBtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsConfigurationBtnDelete.Enabled = false;
-            this.tsConfigurationBtnDelete.Image = global::PlcScanner.Properties.Resources.IconDelete;
-            this.tsConfigurationBtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsConfigurationBtnDelete.Name = "tsConfigurationBtnDelete";
-            this.tsConfigurationBtnDelete.Size = new System.Drawing.Size(29, 24);
-            this.tsConfigurationBtnDelete.Click += new System.EventHandler(this.tsConfigurationBtnDelete_Click);
-            // 
-            // tsConfigurationBtnRefresh
-            // 
-            this.tsConfigurationBtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsConfigurationBtnRefresh.Image = global::PlcScanner.Properties.Resources.IconRefresh;
-            this.tsConfigurationBtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsConfigurationBtnRefresh.Name = "tsConfigurationBtnRefresh";
-            this.tsConfigurationBtnRefresh.Size = new System.Drawing.Size(29, 24);
-            this.tsConfigurationBtnRefresh.Click += new System.EventHandler(this.tsConfigurationBtnRefresh_Click);
+            this.gwClientSubscribed.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientSubscribed.HeaderText = "Subscribed";
+            this.gwClientSubscribed.MinimumWidth = 6;
+            this.gwClientSubscribed.Name = "gwClientSubscribed";
+            this.gwClientSubscribed.ReadOnly = true;
+            this.gwClientSubscribed.Width = 125;
             // 
             // frmMain
             // 
@@ -903,12 +904,6 @@
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.Button btnEditServerConfiguration;
         private Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridView twClientNodes;
-        private Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn gwClientNodeId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientTimestamp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientStatus;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn gwClientSubscribed;
         private System.Windows.Forms.ToolStripMenuItem importaConfigurazioneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem esportaConfigurazioneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem esciToolStripMenuItem;
@@ -917,6 +912,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gwHistorianProjectType;
         private System.Windows.Forms.DataGridViewTextBoxColumn gwHistorianMessage;
         private System.Windows.Forms.DataGridViewTextBoxColumn gwHistorianTimestamp;
+        private Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn gwClientNodeId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientTimestamp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gwClientStatus;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn gwClientSubscribed;
     }
 }
 

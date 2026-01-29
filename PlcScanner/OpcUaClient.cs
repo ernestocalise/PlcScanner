@@ -3,6 +3,7 @@ using Opc.Ua.Client;
 using Opc.Ua.Configuration;
 using PlcScanner.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -202,6 +203,11 @@ namespace PlcScanner
                 var childNodeId = ExpandedNodeId.ToNodeId(reference.NodeId, _session.NamespaceUris);
                 opcNode.Children.Add(BrowseNodeRecursively(childNodeId));
             }
+            if (opcNode.Children.Count > 0 &&
+                opcNode.ValueRank != ValueRanks.OneDimension)
+            {
+                opcNode.DataType = "Folder";
+            }
             return opcNode;
         }
         public XElement GenerateXml(OpcNode node)
@@ -317,7 +323,7 @@ namespace PlcScanner
             }
             return true;
         }
-        public void RemoveSubscription(string subscriptionId)
+        public void RemoveSubscription(string subscriptionId, string nodeId)
         {
             if (_session == null || !_session.Connected)
             {
@@ -331,51 +337,93 @@ namespace PlcScanner
             }
             try
             {
+                var comparableNodeId = new NodeId(nodeId);
                 var subscriptionFound = _session.Subscriptions.First(item => item.Id == uint.Parse(subscriptionId));
-                subscriptionFound.Delete(true);
-                _session.RemoveSubscription(subscriptionFound);
+                var itemFound = subscriptionFound.MonitoredItems.First(item => item.StartNodeId == comparableNodeId);
+                subscriptionFound.RemoveItem(itemFound);
+                if(subscriptionFound.MonitoredItems.Count() <= 0)
+                {
+                    subscriptionFound.Delete(true);
+                    _session.RemoveSubscription(subscriptionFound);
+                }
             }
             catch (Exception ex)
             {
                 _log.WriteError($"Unable to remove subscription. Error [{ex.Message}]");
             }
         }
-        public string CreateSubscription(List<string> nodeIds, int publishingInterval, MonitoredItemNotificationEventHandler callback)
+        public Dictionary<string, string> SubscribeTags(
+            List<OpcTag> tags,
+            int publishingInterval,
+            MonitoredItemNotificationEventHandler callback)
         {
             if (_session == null || !_session.Connected)
             {
                 _log.WriteError("Session is not connected!");
                 return null;
             }
-            var _subscription = new Subscription(_session.DefaultSubscription)
+
+            var nodeIdToSubscription = new Dictionary<string, string>();
+
+            const int chunkSize = 100;
+            var tagChunks = tags
+                .Select((tag, index) => new { tag, index })
+                .GroupBy(x => x.index / chunkSize)
+                .Select(g => g.Select(x => x.tag).ToList())
+                .ToList();
+
+            foreach (var chunk in tagChunks)
             {
-                PublishingInterval = publishingInterval,
-                KeepAliveCount = 10,
-                LifetimeCount = 20,
-                PublishingEnabled = true
-            };
-            var monitoredItems = new List<MonitoredItem>();
-            foreach (var nodeId in nodeIds)
-            {
-                var monitoredItem = new MonitoredItem(_subscription.DefaultItem)
+                var subscription = _session.Subscriptions?
+                    .FirstOrDefault(s => s.MonitoredItems.Count() + chunk.Count <= 100);
+
+                bool isNewSubscription = false;
+
+                if (subscription == null)
                 {
-                    DisplayName = nodeId,
-                    StartNodeId = nodeId,
-                    SamplingInterval = 50,
-                    QueueSize = 50,
-                    DiscardOldest = true
-                };
+                    subscription = new Subscription(_session.DefaultSubscription)
+                    {
+                        PublishingInterval = publishingInterval,
+                        KeepAliveCount = 10,
+                        LifetimeCount = 20,
+                        PublishingEnabled = true
+                    };
+                    isNewSubscription = true;
+                }
 
-                monitoredItem.Notification += callback;
-                monitoredItems.Add(monitoredItem);
+                var monitoredItems = new List<MonitoredItem>();
+
+                foreach (var tag in chunk)
+                {
+                    var monitoredItem = new MonitoredItem(subscription.DefaultItem)
+                    {
+                        DisplayName = tag.Name,
+                        StartNodeId = tag.NodeId,
+                        SamplingInterval = 50,
+                        QueueSize = 50,
+                        DiscardOldest = true
+                    };
+
+                    monitoredItem.Notification += callback;
+                    monitoredItems.Add(monitoredItem);
+                }
+
+                subscription.AddItems(monitoredItems);
+
+                if (isNewSubscription)
+                {
+                    _session.AddSubscription(subscription);
+                    subscription.Create();
+                    subscription = _session.Subscriptions.Last();
+                }
+                foreach(var tag in chunk)
+                {
+                    nodeIdToSubscription[tag.NodeId] = subscription.Id.ToString();
+                }
+
             }
-            _subscription.AddItems(monitoredItems);
-            _subscription.PublishingEnabled = true;
 
-            _session.AddSubscription(_subscription);
-            _session.Subscriptions.Last().Create();
-            _log.WriteInfo($"Subscription created on tag [{nodeIds.First()}] with id [{_session.Subscriptions.Last().Id}]!");
-            return _session.Subscriptions.Last().Id.ToString();
+            return nodeIdToSubscription;
         }
         public KeyValuePair<string, DateTime> ReadValue(string nodeId)
         {
