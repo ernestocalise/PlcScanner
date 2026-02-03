@@ -50,9 +50,15 @@
             this.tcClientServer = new System.Windows.Forms.TabControl();
             this.tabClient = new System.Windows.Forms.TabPage();
             this.twClientNodes = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridView();
+            this.gwClientNodeId = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn();
             this.ctxMenuClientTable = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.readSyncronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeSyncronouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gwClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gwClientSubscribed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btnSubscibeTags = new System.Windows.Forms.Button();
             this.btnExploreRoutines = new System.Windows.Forms.Button();
             this.lblRoutineLenght = new System.Windows.Forms.Label();
@@ -88,12 +94,6 @@
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gwClientNodeId = new Krypton.Toolkit.Suite.Extended.TreeGridView.KryptonTreeGridColumn();
-            this.gwClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientTimestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gwClientSubscribed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -329,7 +329,6 @@
             // 
             this.twClientNodes.AllowUserToAddRows = false;
             this.twClientNodes.AllowUserToDeleteRows = false;
-            this.twClientNodes.AllowUserToOrderColumns = true;
             this.twClientNodes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -351,6 +350,18 @@
             this.twClientNodes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.twClientNodes.Size = new System.Drawing.Size(591, 157);
             this.twClientNodes.TabIndex = 10;
+            // 
+            // gwClientNodeId
+            // 
+            this.gwClientNodeId.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientNodeId.DefaultNodeImage = null;
+            this.gwClientNodeId.HeaderText = "Name";
+            this.gwClientNodeId.MinimumWidth = 6;
+            this.gwClientNodeId.Name = "gwClientNodeId";
+            this.gwClientNodeId.ReadOnly = true;
+            this.gwClientNodeId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gwClientNodeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientNodeId.Width = 125;
             // 
             // ctxMenuClientTable
             // 
@@ -375,6 +386,55 @@
             this.writeSyncronouslyToolStripMenuItem.Size = new System.Drawing.Size(204, 24);
             this.writeSyncronouslyToolStripMenuItem.Text = "Write Syncronously";
             this.writeSyncronouslyToolStripMenuItem.Click += new System.EventHandler(this.writeSyncronouslyToolStripMenuItem_Click);
+            // 
+            // gwClientName
+            // 
+            this.gwClientName.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientName.HeaderText = "NodeId";
+            this.gwClientName.MinimumWidth = 6;
+            this.gwClientName.Name = "gwClientName";
+            this.gwClientName.ReadOnly = true;
+            this.gwClientName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.gwClientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientName.Width = 125;
+            // 
+            // gwClientValue
+            // 
+            this.gwClientValue.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientValue.HeaderText = "Value";
+            this.gwClientValue.MinimumWidth = 6;
+            this.gwClientValue.Name = "gwClientValue";
+            this.gwClientValue.ReadOnly = true;
+            this.gwClientValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientValue.Width = 125;
+            // 
+            // gwClientTimestamp
+            // 
+            this.gwClientTimestamp.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientTimestamp.HeaderText = "TimeStamp";
+            this.gwClientTimestamp.MinimumWidth = 6;
+            this.gwClientTimestamp.Name = "gwClientTimestamp";
+            this.gwClientTimestamp.ReadOnly = true;
+            this.gwClientTimestamp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientTimestamp.Width = 125;
+            // 
+            // gwClientStatus
+            // 
+            this.gwClientStatus.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientStatus.HeaderText = "Status";
+            this.gwClientStatus.MinimumWidth = 6;
+            this.gwClientStatus.Name = "gwClientStatus";
+            this.gwClientStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.gwClientStatus.Width = 125;
+            // 
+            // gwClientSubscribed
+            // 
+            this.gwClientSubscribed.ContextMenuStrip = this.ctxMenuClientTable;
+            this.gwClientSubscribed.HeaderText = "Subscribed";
+            this.gwClientSubscribed.MinimumWidth = 6;
+            this.gwClientSubscribed.Name = "gwClientSubscribed";
+            this.gwClientSubscribed.ReadOnly = true;
+            this.gwClientSubscribed.Width = 125;
             // 
             // btnSubscibeTags
             // 
@@ -745,67 +805,6 @@
             this.stopToolStripMenuItem.Size = new System.Drawing.Size(228, 24);
             this.stopToolStripMenuItem.Text = "Stop Routine";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
-            // 
-            // gwClientNodeId
-            // 
-            this.gwClientNodeId.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientNodeId.DefaultNodeImage = null;
-            this.gwClientNodeId.HeaderText = "Name";
-            this.gwClientNodeId.MinimumWidth = 6;
-            this.gwClientNodeId.Name = "gwClientNodeId";
-            this.gwClientNodeId.ReadOnly = true;
-            this.gwClientNodeId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gwClientNodeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientNodeId.Width = 125;
-            // 
-            // gwClientName
-            // 
-            this.gwClientName.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientName.HeaderText = "NodeId";
-            this.gwClientName.MinimumWidth = 6;
-            this.gwClientName.Name = "gwClientName";
-            this.gwClientName.ReadOnly = true;
-            this.gwClientName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.gwClientName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientName.Width = 125;
-            // 
-            // gwClientValue
-            // 
-            this.gwClientValue.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientValue.HeaderText = "Value";
-            this.gwClientValue.MinimumWidth = 6;
-            this.gwClientValue.Name = "gwClientValue";
-            this.gwClientValue.ReadOnly = true;
-            this.gwClientValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientValue.Width = 125;
-            // 
-            // gwClientTimestamp
-            // 
-            this.gwClientTimestamp.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientTimestamp.HeaderText = "TimeStamp";
-            this.gwClientTimestamp.MinimumWidth = 6;
-            this.gwClientTimestamp.Name = "gwClientTimestamp";
-            this.gwClientTimestamp.ReadOnly = true;
-            this.gwClientTimestamp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientTimestamp.Width = 125;
-            // 
-            // gwClientStatus
-            // 
-            this.gwClientStatus.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientStatus.HeaderText = "Status";
-            this.gwClientStatus.MinimumWidth = 6;
-            this.gwClientStatus.Name = "gwClientStatus";
-            this.gwClientStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.gwClientStatus.Width = 125;
-            // 
-            // gwClientSubscribed
-            // 
-            this.gwClientSubscribed.ContextMenuStrip = this.ctxMenuClientTable;
-            this.gwClientSubscribed.HeaderText = "Subscribed";
-            this.gwClientSubscribed.MinimumWidth = 6;
-            this.gwClientSubscribed.Name = "gwClientSubscribed";
-            this.gwClientSubscribed.ReadOnly = true;
-            this.gwClientSubscribed.Width = 125;
             // 
             // frmMain
             // 

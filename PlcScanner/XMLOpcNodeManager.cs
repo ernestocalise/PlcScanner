@@ -55,7 +55,14 @@ namespace PlcScanner
             }
             foreach (var variable in element.Elements("Variable"))
             {
-                var vname = variable.Attribute("Name").Value;
+                if(variable.Attribute("DataType").Value == "Folder")
+                {
+                    var f = CreateFolder(parent, variable.Attribute("Name").Value);
+                    _log.WriteDebug($"Created Folder [{variable.Attribute("Name").Value}]");
+                    BuildRecursively(f, variable);
+                } else
+                {
+                    var vname = variable.Attribute("Name").Value;
                 var vtype = ParseType(variable.Attribute("DataType").Value);
 
                 int valueRank = ValueRanks.Scalar;
@@ -76,6 +83,7 @@ namespace PlcScanner
                     arrayDimension
                     );
                 _log.WriteDebug($"Created Variable [{variable.Attribute("Name").Value}]");
+                }
             }
         }
         private NodeId ParseType(string type)
