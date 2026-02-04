@@ -17,7 +17,7 @@ PlcScanner is a Windows application for scanning, monitoring, and simulating PLC
 
 ## Software Installation
 
-1. Download the installer from (https://www.ernestocalise.it/PlcScanner/)
+1. Download the installer from [here](https://www.ernestocalise.it/PlcScanner/).
 2. Run the installer
 
 ## Usage
