@@ -125,7 +125,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(935, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(935, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -137,7 +137,7 @@
             this.esportaConfigurazioneToolStripMenuItem,
             this.esciToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // creaNuovaConfigurazioneToolStripMenuItem
@@ -183,8 +183,8 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(151, 20);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 20);
+            this.toolStripStatusLabel1.Text = "Ready";
             // 
             // splitContainer1
             // 
@@ -203,7 +203,7 @@
             this.splitContainer1.Panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("splitContainer1.Panel2.BackgroundImage")));
             this.splitContainer1.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.splitContainer1.Panel2.Controls.Add(this.tcClientServer);
-            this.splitContainer1.Size = new System.Drawing.Size(935, 274);
+            this.splitContainer1.Size = new System.Drawing.Size(935, 272);
             this.splitContainer1.SplitterDistance = 310;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -216,7 +216,7 @@
             this.lstConfigurations.Location = new System.Drawing.Point(0, 27);
             this.lstConfigurations.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lstConfigurations.Name = "lstConfigurations";
-            this.lstConfigurations.Size = new System.Drawing.Size(310, 247);
+            this.lstConfigurations.Size = new System.Drawing.Size(310, 245);
             this.lstConfigurations.TabIndex = 1;
             this.lstConfigurations.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lstConfigurations_DrawItem);
             this.lstConfigurations.SelectedIndexChanged += new System.EventHandler(this.lstConfigurations_SelectedIndexChanged);
@@ -301,7 +301,7 @@
             this.tcClientServer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tcClientServer.Name = "tcClientServer";
             this.tcClientServer.SelectedIndex = 0;
-            this.tcClientServer.Size = new System.Drawing.Size(621, 274);
+            this.tcClientServer.Size = new System.Drawing.Size(621, 272);
             this.tcClientServer.TabIndex = 0;
             // 
             // tabClient
@@ -320,7 +320,7 @@
             this.tabClient.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabClient.Name = "tabClient";
             this.tabClient.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabClient.Size = new System.Drawing.Size(613, 245);
+            this.tabClient.Size = new System.Drawing.Size(613, 243);
             this.tabClient.TabIndex = 0;
             this.tabClient.Text = "Client";
             this.tabClient.UseVisualStyleBackColor = true;
@@ -348,7 +348,7 @@
             this.twClientNodes.Name = "twClientNodes";
             this.twClientNodes.RowHeadersWidth = 51;
             this.twClientNodes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.twClientNodes.Size = new System.Drawing.Size(591, 157);
+            this.twClientNodes.Size = new System.Drawing.Size(591, 155);
             this.twClientNodes.TabIndex = 10;
             // 
             // gwClientNodeId
@@ -439,7 +439,7 @@
             // btnSubscibeTags
             // 
             this.btnSubscibeTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSubscibeTags.Location = new System.Drawing.Point(128, 205);
+            this.btnSubscibeTags.Location = new System.Drawing.Point(128, 203);
             this.btnSubscibeTags.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSubscibeTags.Name = "btnSubscibeTags";
             this.btnSubscibeTags.Size = new System.Drawing.Size(133, 31);
@@ -451,7 +451,7 @@
             // btnExploreRoutines
             // 
             this.btnExploreRoutines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExploreRoutines.Location = new System.Drawing.Point(6, 205);
+            this.btnExploreRoutines.Location = new System.Drawing.Point(6, 203);
             this.btnExploreRoutines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnExploreRoutines.Name = "btnExploreRoutines";
             this.btnExploreRoutines.Size = new System.Drawing.Size(116, 31);
@@ -464,7 +464,7 @@
             // 
             this.lblRoutineLenght.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRoutineLenght.AutoSize = true;
-            this.lblRoutineLenght.Location = new System.Drawing.Point(404, 212);
+            this.lblRoutineLenght.Location = new System.Drawing.Point(404, 210);
             this.lblRoutineLenght.Name = "lblRoutineLenght";
             this.lblRoutineLenght.Size = new System.Drawing.Size(55, 16);
             this.lblRoutineLenght.TabIndex = 7;
@@ -473,7 +473,7 @@
             // btnRegisterRoutine
             // 
             this.btnRegisterRoutine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegisterRoutine.Location = new System.Drawing.Point(474, 205);
+            this.btnRegisterRoutine.Location = new System.Drawing.Point(474, 203);
             this.btnRegisterRoutine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegisterRoutine.Name = "btnRegisterRoutine";
             this.btnRegisterRoutine.Size = new System.Drawing.Size(131, 31);
@@ -636,7 +636,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 28);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 30);
             this.splitContainer2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -648,8 +648,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gwHistorian);
-            this.splitContainer2.Size = new System.Drawing.Size(935, 403);
-            this.splitContainer2.SplitterDistance = 274;
+            this.splitContainer2.Size = new System.Drawing.Size(935, 401);
+            this.splitContainer2.SplitterDistance = 272;
             this.splitContainer2.TabIndex = 5;
             // 
             // gwHistorian

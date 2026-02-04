@@ -3,4 +3,7 @@
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="PlcScanner/PlcScanner.csproj" Id="0288c8ce-24b9-4b38-a13f-c39068ab1b6f" />
+  <Project Path="PlcScannerSetup/PlcScannerSetup.vdproj" Type="Installer">
+    <Build />
+  </Project>
 </Solution>
