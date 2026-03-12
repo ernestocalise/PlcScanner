@@ -26,7 +26,7 @@ namespace PlcScanner
     {
         public string Name;
         private OpcUaClient _client;
-        private bool _active;
+        private bool _status;
         public OpcTag ClientMapping;
         private List<ClientTag> _clientTags = new List<ClientTag>();
         public DataTable dtClientTags = new DataTable();
@@ -37,10 +37,6 @@ namespace PlcScanner
         private Stopwatch _swRoutineRecorder;
         private readonly Action<OpcTag> _callbackUpdateTreeview;
         private System.Threading.Timer _tmrRoutineUpdates;
-        public bool IsActive()
-        {
-            return _active;
-        }
         public MapperManager(string _name, PlcConfiguration config, Action<OpcTag> callbackUpdateTreeview)
         {
             this.Name = _name;
@@ -48,21 +44,29 @@ namespace PlcScanner
             this._server = new OpcUaSimulationServer(_name);
             _callbackUpdateTreeview = callbackUpdateTreeview;
         }
-        public void SetActive(bool active)
+        public bool IsConnected()
         {
-            _active = active;
+            if (_client != null)
+                if (_client.IsConnected())
+                    return true;
+            if (_server != null)
+                if (_server.IsRunning)
+                    return true;
+            return false;
+        }
+        public bool IsActive()
+        {
+            return _status;
+        }
+        public void SetActive(bool status)
+        {
+            _status = status;
         }
         public PlcConfiguration GetClientConfiguration()
         {
             return _client.GetPlcConfiguration();
         }
         #region Client
-        public bool HasSubscriptionActive()
-        {
-            if (_client.IsConnected() || _server.IsRunning)
-                return true;
-            return false;
-        }
         public bool IsClientConected()
         {
             if (_client == null)

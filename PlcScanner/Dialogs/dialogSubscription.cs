@@ -29,11 +29,18 @@ namespace PlcScanner.Dialogs
         public TreeNode CreateNode(OpcTag tag)
         {
             TreeNode n = new TreeNode(tag.NodeId);
+            try
+            {
             if (tag.SubscriptionID != string.Empty)
                 n.Checked = true;
             Mapping.Add(tag.NodeId, tag.SubscriptionID != string.Empty);
             foreach (OpcTag element in tag.Childrens)
                 n.Nodes.Add(CreateNode(element));
+
+            } catch
+            {
+
+            }
             return n;
         }
 

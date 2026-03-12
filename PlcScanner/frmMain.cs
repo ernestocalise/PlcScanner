@@ -165,7 +165,7 @@ namespace PlcScanner
             int i = 0;
             while (i < _mappers.Count)
             {
-                if (!_mappers[i].HasSubscriptionActive())
+                if (!_mappers[i].IsConnected())
                 {
                     _mappers[i] = null;
                     _mappers.RemoveAt(i);
@@ -228,7 +228,7 @@ namespace PlcScanner
             MapperManager mapper = GetActiveMapper();
             if (mapper != null)
             {
-                if (mapper.HasSubscriptionActive())
+                if (mapper.IsConnected())
                 {
                     MessageBox.Show("This project is active! stop both client and server and retry.", "PlcScanner", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -603,7 +603,7 @@ namespace PlcScanner
             {
                 var dlg = new dialogSelectRoutine(mapper.Name);
                 if (dlg.ShowDialog() == DialogResult.OK)
-                    mapper.AddRoutine(dlg.SelectedRoutine); 
+                    mapper.AddRoutine(dlg.SelectedRoutine);
             }
 
         }
