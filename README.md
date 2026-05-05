@@ -1,7 +1,7 @@
 # PlcScanner
 
 PlcScanner is a Windows application for scanning, monitoring, and simulating PLC (Programmable Logic Controller) data using the OPC UA protocol. It provides a user-friendly interface to connect to OPC UA servers, visualize and log tag data, and simulate PLC environments for testing and development.
-
+ 
 ## Features
 
 - Connect to OPC UA servers as a client
